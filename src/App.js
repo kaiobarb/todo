@@ -1,25 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import ToDos from './components/ToDos';
+import _tasks from './_intial';
+import NewTaskForm from './components/NewTaskForm';
+import Config from './ToDoContext';
+import config from './config';
 
 function App() {
+  const [tasks, setTasks] = useState(_tasks)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Config.Provider value={config}>
+      <div className='container'>
+        <h1 className='my-4'>To Do</h1>
+        <NewTaskForm addTodo={task => setTasks([...tasks, task])} />
+        <hr />
+        <ToDos tasks={tasks} />
+      </div>
+    </Config.Provider>
   );
 }
 
